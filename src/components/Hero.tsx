@@ -8,6 +8,18 @@ import {
   ExternalLink,
 } from "lucide-react";
 
+const renderBold = (text: string) =>
+  text.split(/(\*\*[^*]+\*\*)/g).map((part, idx) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={idx} className="font-semibold text-zinc-100">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return <span key={idx}>{part}</span>;
+  });
+
 export function Hero({ project }: { project: Project }) {
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center px-4 sm:px-6 overflow-hidden pt-20">
@@ -41,7 +53,7 @@ export function Hero({ project }: { project: Project }) {
         </p>
 
         <p className="text-zinc-500 text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
-          {project.description}
+          {renderBold(project.description)}
         </p>
 
         {/* Meta pills */}
@@ -51,6 +63,17 @@ export function Hero({ project }: { project: Project }) {
           <MetaPill icon={<Users size={16} />} label="Team" value={`${project.teamSize} people`} />
           <MetaPill icon={<Code2 size={16} />} label="Type" value={project.status} />
         </div>
+
+        {project.coverImage && (
+          <div className="relative mx-auto mb-14 max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/70 shadow-2xl">
+            <img
+              src={project.coverImage}
+              alt={project.coverImageAlt || `${project.title} screenshot`}
+              className="w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        )}
 
         {/* Live links */}
         {project.links && project.links.length > 0 && (

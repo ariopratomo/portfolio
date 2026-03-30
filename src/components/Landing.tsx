@@ -39,6 +39,18 @@ const colorMap: Record<string, { bg: string; border: string; text: string; glow:
   },
 };
 
+const renderBold = (text: string) =>
+  text.split(/(\*\*[^*]+\*\*)/g).map((part, idx) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={idx} className="font-semibold text-zinc-100">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return <span key={idx}>{part}</span>;
+  });
+
 export function Landing({
   projects,
   onSelect,
@@ -108,6 +120,17 @@ export function Landing({
                   onClick={() => onSelect(project)}
                   className={`group text-left rounded-2xl bg-zinc-900/60 border border-zinc-800 p-6 sm:p-8 transition-all hover:border-zinc-700 hover:shadow-xl ${colors.glow} cursor-pointer`}
                 >
+                  {project.coverImage && (
+                    <div className="mb-5 overflow-hidden rounded-xl border border-white/10 bg-zinc-900">
+                      <img
+                        src={project.coverImage}
+                        alt={project.coverImageAlt || `${project.title} preview`}
+                        className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+
                   {/* Status + Color accent */}
                   <div className="flex items-center justify-between mb-4">
                     <span
@@ -132,7 +155,7 @@ export function Landing({
 
                   {/* Description */}
                   <p className="text-zinc-500 text-sm leading-relaxed mb-6 line-clamp-3">
-                    {project.description}
+                    {renderBold(project.description)}
                   </p>
 
                   {/* Meta row */}

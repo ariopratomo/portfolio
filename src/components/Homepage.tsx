@@ -10,6 +10,18 @@ import {
   Award,
 } from "lucide-react";
 
+const renderBold = (text: string) =>
+  text.split(/(\*\*[^*]+\*\*)/g).map((part, idx) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={idx} className="font-semibold text-zinc-100">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return <span key={idx}>{part}</span>;
+  });
+
 export function Homepage({ onViewProject }: { onViewProject: (p: Project) => void }) {
   return (
     <>
@@ -218,6 +230,17 @@ export function Homepage({ onViewProject }: { onViewProject: (p: Project) => voi
               onClick={() => onViewProject(project)}
               className="w-full text-left rounded-xl bg-zinc-900/60 border border-zinc-800 p-6 sm:p-8 hover:border-primary/40 transition-all group cursor-pointer"
             >
+              {project.coverImage && (
+                <div className="mb-5 overflow-hidden rounded-lg border border-white/10 bg-zinc-900/70">
+                  <img
+                    src={project.coverImage}
+                    alt={project.coverImageAlt || `${project.title} screenshot`}
+                    className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-zinc-100 group-hover:text-primary-light transition-colors">
@@ -234,7 +257,7 @@ export function Homepage({ onViewProject }: { onViewProject: (p: Project) => voi
               </div>
 
               <p className="text-zinc-400 text-sm leading-relaxed mb-5">
-                {project.description}
+                {renderBold(project.description)}
               </p>
 
               <div className="flex flex-wrap gap-2 mb-5">

@@ -36,6 +36,8 @@ export interface Project {
   teamSize: number;
   status: string;
   color: string; // accent color for project card
+  coverImage?: string;
+  coverImageAlt?: string;
   techStack: Record<string, TechItem[]>;
   features: Feature[];
   challenges: Challenge[];
@@ -136,12 +138,14 @@ export const projects: Project[] = [
     title: "Ducking Platform",
     subtitle: "Full-Stack E-Commerce Platform",
     description:
-      "End-to-end e-commerce platform connecting Indonesian buyers with Chinese marketplaces. Built with React 19 frontend and Go backend — covering product search, cart management, order lifecycle, real-time messaging, async email delivery, and multi-layer security.",
+      "End-to-end e-commerce platform connecting Indonesian buyers with Chinese marketplaces. Built with **React 19 frontend** and **Go backend** — covering **product search**, **cart management**, **order lifecycle**, real-time messaging, async email delivery, and multi-layer security.",
     role: "Software Engineer",
     duration: "3 Months (parallel with UI/UX)",
     teamSize: 1,
     status: "Production",
     color: "indigo",
+    coverImage: "/Ducking.jpg",
+    coverImageAlt: "Dashboard Ducking Platform preview",
     links: [
       { label: "Member Dashboard", url: "https://member.ducking.id" },
     ],
@@ -360,6 +364,8 @@ export const projects: Project[] = [
     teamSize: 1,
     status: "Production",
     color: "emerald",
+    coverImage: "/ducking-id.png",
+    coverImageAlt: "Landing page Ducking company profile",
     links: [
       { label: "Live Site", url: "https://ducking.id" },
     ],

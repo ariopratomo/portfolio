@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { type Project } from "./data/portfolio";
 import { Navbar } from "./components/Navbar";
 import { Homepage } from "./components/Homepage";
@@ -8,12 +8,42 @@ import { Features } from "./components/Features";
 import { Challenges } from "./components/Challenges";
 import { Architecture } from "./components/Architecture";
 import { Footer } from "./components/Footer";
+import { QuickTools } from "./components/QuickTools";
+import { ResumeBuilder } from "./features/resume/ResumeBuilder";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 
-type Page = { type: "home" } | { type: "project"; project: Project };
+export type Page = { type: "home" } | { type: "project"; project: Project } | { type: "resume-builder" };
+type Theme = "light" | "dark";
+
+const getInitialTheme = (): Theme => {
+  if (typeof window === "undefined") return "dark";
+  const stored = window.localStorage.getItem("theme");
+  if (stored === "light" || stored === "dark") return stored;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+};
 
 function App() {
   const [page, setPage] = useState<Page>({ type: "home" });
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    window.localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    const title =
+      page.type === "resume-builder"
+        ? "Ario | Resume Builder"
+        : page.type === "project"
+          ? `Ario | ${page.project.title}`
+          : "Ario | Software Engineer"
+    document.title = title;
+  }, [page]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  }, []);
 
   const handleViewProject = (project: Project) => {
     setPage({ type: "project", project });
@@ -25,13 +55,22 @@ function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans">
-      <Navbar page={page.type} onGoHome={handleGoHome} />
+  const handleGoResume = () => {
+    setPage({ type: "resume-builder" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-      {page.type === "home" ? (
-        <Homepage onViewProject={handleViewProject} />
-      ) : (
+  return (
+    <div
+      className={`min-h-screen font-sans ${
+        theme === "dark" ? "bg-zinc-950 text-zinc-100" : "bg-white text-slate-900"
+      }`}
+    >
+      <Navbar page={page.type} onGoHome={handleGoHome} onOpenResume={handleGoResume} />
+
+      {page.type === "home" && <Homepage onViewProject={handleViewProject} />}
+
+      {page.type === "project" && (
         <>
           <Hero project={page.project} />
           <TechStack techStack={page.project.techStack} />
@@ -46,7 +85,10 @@ function App() {
         </>
       )}
 
+      {page.type === "resume-builder" && <ResumeBuilder />}
+
       <Footer />
+      <QuickTools page={page} theme={theme} onToggleTheme={toggleTheme} onGoHome={handleGoHome} />
       <SpeedInsights />
     </div>
   );

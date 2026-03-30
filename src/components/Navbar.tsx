@@ -16,17 +16,24 @@ const projectNavItems = [
   { label: "Architecture", href: "#architecture" },
 ];
 
+const resumeNavItems = [
+  { label: "Form", href: "#resume-form" },
+  { label: "Preview", href: "#resume-preview" },
+];
+
 export function Navbar({
   page,
   onGoHome,
+  onOpenResume,
 }: {
-  page: "home" | "project";
+  page: "home" | "project" | "resume-builder";
   onGoHome: () => void;
+  onOpenResume: () => void;
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const navItems = page === "home" ? homeNavItems : projectNavItems;
+  const navItems = page === "home" ? homeNavItems : page === "project" ? projectNavItems : resumeNavItems;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -76,6 +83,12 @@ export function Navbar({
               {item.label}
             </a>
           ))}
+          <button
+            onClick={onOpenResume}
+            className="ml-2 px-3 py-2 text-sm rounded-lg border border-zinc-800 text-zinc-200 hover:text-white hover:border-primary/50 hover:bg-primary/10 transition-all"
+          >
+            Resume Builder
+          </button>
         </div>
 
         {/* Mobile toggle */}
@@ -101,6 +114,15 @@ export function Navbar({
               {item.label}
             </a>
           ))}
+          <button
+            onClick={() => {
+              onOpenResume();
+              setMobileOpen(false);
+            }}
+            className="mt-2 w-full text-left px-3 py-3 text-sm text-zinc-200 rounded-lg bg-primary/10 border border-primary/30"
+          >
+            Resume Builder
+          </button>
         </div>
       )}
     </nav>
