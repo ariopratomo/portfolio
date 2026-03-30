@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { type Project } from "./data/portfolio";
 import { Navbar } from "./components/Navbar";
 import { Homepage } from "./components/Homepage";
@@ -24,7 +24,7 @@ const getInitialTheme = (): Theme => {
 
 function App() {
   const [page, setPage] = useState<Page>({ type: "home" });
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const [theme] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -40,10 +40,6 @@ function App() {
           : "Ario | Software Engineer"
     document.title = title;
   }, [page]);
-
-  const toggleTheme = useCallback(() => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  }, []);
 
   const handleViewProject = (project: Project) => {
     setPage({ type: "project", project });

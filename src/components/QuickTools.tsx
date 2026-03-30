@@ -3,8 +3,6 @@ import { AlertTriangle, Check, Clipboard, Command, Gauge, Link2, Search, Share, 
 import type { Page } from "../App";
 import { profile } from "../data/portfolio";
 
-type Theme = "light" | "dark";
-
 type QuickToolsProps = {
   page: Page;
   onGoHome: () => void;
