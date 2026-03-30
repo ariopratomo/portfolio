@@ -85,7 +85,7 @@ export const profile: Profile = {
     "Fullstack Engineer dengan 5+ tahun pengalaman dalam membangun dan mengelola sistem production end-to-end, mencakup backend, frontend, dan infrastruktur. Memiliki fokus pada backend development menggunakan Laravel dan Golang, termasuk pengembangan API dengan kebutuhan high concurrency dan scalable architecture. Berpengalaman dalam CI/CD, cloud infrastructure, dan deployment untuk memastikan sistem berjalan stabil, efisien, dan mudah dikembangkan.",
   location: "Jakarta, Indonesia",
   email: "ariopratomo123@gmail.com",
-  github: "https://github.com",
+  github: "https://github.com/ariopratomo",
   linkedin: "https://www.linkedin.com/in/arioprtmo",
   skills: {
     Backend: ["Laravel", "Golang", "REST API", "Clean Architecture", "MySQL", "Redis"],
