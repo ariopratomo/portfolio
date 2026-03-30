@@ -8,6 +8,7 @@ import { Features } from "./components/Features";
 import { Challenges } from "./components/Challenges";
 import { Architecture } from "./components/Architecture";
 import { Footer } from "./components/Footer";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 type Page = { type: "home" } | { type: "project"; project: Project };
 
@@ -46,6 +47,7 @@ function App() {
       )}
 
       <Footer />
+      <SpeedInsights />
     </div>
   );
 }
