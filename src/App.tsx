@@ -88,7 +88,7 @@ function App() {
       {page.type === "resume-builder" && <ResumeBuilder />}
 
       <Footer />
-      <QuickTools page={page} theme={theme} onToggleTheme={toggleTheme} onGoHome={handleGoHome} />
+      <QuickTools page={page} onGoHome={handleGoHome} />
       <SpeedInsights />
     </div>
   );

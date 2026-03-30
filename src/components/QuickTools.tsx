@@ -1,18 +1,5 @@
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  AlertTriangle,
-  Check,
-  Clipboard,
-  Command,
-  Gauge,
-  Link2,
-  Moon,
-  Search,
-  Share,
-  Sparkles,
-  Sun,
-  WifiOff,
-} from "lucide-react";
+import { AlertTriangle, Check, Clipboard, Command, Gauge, Link2, Search, Share, Sparkles, WifiOff } from "lucide-react";
 import type { Page } from "../App";
 import { profile } from "../data/portfolio";
 
@@ -20,8 +7,6 @@ type Theme = "light" | "dark";
 
 type QuickToolsProps = {
   page: Page;
-  theme: Theme;
-  onToggleTheme: () => void;
   onGoHome: () => void;
 };
 
@@ -55,7 +40,7 @@ const scrollToId = (id: string) => {
   }
 };
 
-export function QuickTools({ page, theme, onToggleTheme, onGoHome }: QuickToolsProps) {
+export function QuickTools({ page, onGoHome }: QuickToolsProps) {
   const [isPaletteOpen, setPaletteOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [highlighted, setHighlighted] = useState(0);
