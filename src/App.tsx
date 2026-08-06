@@ -11,6 +11,7 @@ import { Footer } from "./components/Footer";
 import { QuickTools } from "./components/QuickTools";
 import { ResumeBuilder } from "./features/resume/ResumeBuilder";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from "@vercel/analytics/react";
 
 export type Page = { type: "home" } | { type: "project"; project: Project } | { type: "resume-builder" };
 type Theme = "light" | "dark";
@@ -86,6 +87,7 @@ function App() {
       <Footer />
       <QuickTools page={page} onGoHome={handleGoHome} />
       <SpeedInsights />
+      <Analytics />
     </div>
   );
 }
